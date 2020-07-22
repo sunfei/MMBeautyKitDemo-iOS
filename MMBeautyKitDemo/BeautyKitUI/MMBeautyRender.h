@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-@import MMBeautyKit;
+#import <AVFoundation/AVFoundation.h>
+#import <MMBeautyKit/MMRenderModuleManager.h>
+#import <MMBeautyKit/MMRenderFilterBeautyModule.h>
+#import <MMBeautyKit/MMRenderFilterBeautyKey.h>
+#import <MMBeautyKit/MMRenderFilterLookupModule.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,6 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) MMRenderInputType inputType;
 
 - (void)setBeautyFactor:(float)value forKey:(MMBeautyFilterKey)key;
+
+- (void)setEffect:(MMBeautyLookupEffect)effect;
+- (void)setIntensity:(CGFloat)intensity;
 
 - (CVPixelBufferRef _Nullable)renderPixelBuffer:(CVPixelBufferRef)pixelBuffer
                                           error:(NSError * __autoreleasing _Nullable *)error;

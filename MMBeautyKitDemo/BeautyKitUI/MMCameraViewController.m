@@ -10,6 +10,7 @@
 #import "MMCamera.h"
 #import "MMDeviceMotionObserver.h"
 #import "MMBeautyRender.h"
+#import "MMCameraTabSegmentView.h"
 @import MetalPetal;
 @import AVFoundation;
 
@@ -19,6 +20,9 @@
 @property (nonatomic, strong) MTIImageView *previewView;
 
 @property (nonatomic, strong) MMBeautyRender *render;
+
+@property (nonatomic, strong) MMCameraTabSegmentView *lookupView;
+@property (nonatomic, strong) MMCameraTabSegmentView *beautyView;
 
 @end
 
@@ -31,6 +35,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
 
     [self setupViews];
     // Do any additional setup after loading the view, typically from a nib.
@@ -47,6 +53,9 @@
 }
 
 - (void)setupViews {
+    
+    self.view.backgroundColor = UIColor.blackColor;
+    
     self.previewView = [[MTIImageView alloc] initWithFrame:[UIScreen.mainScreen bounds]];
     [self.view addSubview:self.previewView];
     
@@ -54,114 +63,216 @@
     button.translatesAutoresizingMaskIntoConstraints = NO;
     [button setTitle:@"flip" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(flipButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+
+    UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    button2.translatesAutoresizingMaskIntoConstraints = NO;
+    [button2 setTitle:@"switch" forState:UIControlStateNormal];
+    [button2 addTarget:self action:@selector(switchButonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    [button.rightAnchor constraintEqualToAnchor:self.view.rightAnchor constant:-8].active = YES;
-    [button.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:80].active = YES;
+    UIStackView *vStackView = [[UIStackView alloc] initWithArrangedSubviews:@[button, button2]];
+    vStackView.translatesAutoresizingMaskIntoConstraints = NO;
+    vStackView.axis = UILayoutConstraintAxisVertical;
+    vStackView.alignment = UIStackViewAlignmentCenter;
+    vStackView.distribution = UIStackViewDistributionFill;
+    vStackView.spacing = 8;
+    [self.view addSubview:vStackView];
     
-    UIView *ruddyView = [self createSliderWithTitle:@"红润" tag:100];
-    ruddyView.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    UIView *whitenView = [self createSliderWithTitle:@"美白" tag:101];
-    whitenView.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    UIView *smoothView = [self createSliderWithTitle:@"磨皮" tag:102];
-    smoothView.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    UIView *bigEyeView = [self createSliderWithTitle:@"大眼" tag:103];
-    bigEyeView.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    UIView *thinFaceView = [self createSliderWithTitle:@"瘦脸" tag:104];
-    thinFaceView.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    UIStackView *bgView = [[UIStackView alloc] initWithArrangedSubviews:@[ruddyView, whitenView, smoothView, bigEyeView, thinFaceView]];
-    bgView.translatesAutoresizingMaskIntoConstraints = NO;
-    bgView.axis = UILayoutConstraintAxisVertical;
-    bgView.alignment = UIStackViewAlignmentCenter;
-    bgView.distribution = UIStackViewDistributionFill;
+    [vStackView.widthAnchor constraintEqualToConstant:80].active = YES;
+    [vStackView.heightAnchor constraintEqualToConstant:80].active = YES;
+    [vStackView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
     if (@available(iOS 11.0, *)) {
-        bgView.spacing = UIStackViewSpacingUseSystem;
+        [vStackView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:100].active = YES;
     } else {
-        bgView.spacing = 8;
+        [vStackView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:100].active = YES;
     }
-    [self.view addSubview:bgView];
     
-    [ruddyView.widthAnchor constraintEqualToAnchor:bgView.widthAnchor].active = YES;
-    [whitenView.widthAnchor constraintEqualToAnchor:bgView.widthAnchor].active = YES;
-    [smoothView.widthAnchor constraintEqualToAnchor:bgView.widthAnchor].active = YES;
-    [bigEyeView.widthAnchor constraintEqualToAnchor:bgView.widthAnchor].active = YES;
-    [thinFaceView.widthAnchor constraintEqualToAnchor:bgView.widthAnchor].active = YES;
-    
-    [bgView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-50].active = YES;
-    [bgView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:20].active = YES;
-    [bgView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-20].active = YES;
-}
+    MMCameraTabSegmentView *segmentView = [[MMCameraTabSegmentView alloc] initWithFrame:CGRectZero];
+    segmentView.items = [self itemsForLookup];
+    segmentView.translatesAutoresizingMaskIntoConstraints = NO;
+    segmentView.hidden = YES;
+    self.lookupView = segmentView;
+    [self.view addSubview:segmentView];
 
-- (UIView *)createSliderWithTitle:(NSString *)title tag:(NSInteger)tag {
-    UILabel *label = [[UILabel alloc] init];
-    label.translatesAutoresizingMaskIntoConstraints = NO;
-    label.text = title;
-    
-    UISlider *slider = [[UISlider alloc] init];
-    slider.translatesAutoresizingMaskIntoConstraints = NO;
-    slider.continuous = YES;
-    slider.minimumValue = 0;
-    slider.maximumValue = 1;
-    slider.tag = tag;
-    [slider addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-    
-    UIStackView *stackView = [[UIStackView alloc] initWithArrangedSubviews:@[label, slider]];
-    stackView.axis = UILayoutConstraintAxisHorizontal;
-    stackView.alignment = UIStackViewAlignmentCenter;
-    stackView.distribution = UIStackViewDistributionFill;
+    [segmentView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+    [segmentView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+    [segmentView.heightAnchor constraintEqualToConstant:160].active = YES;
     if (@available(iOS 11.0, *)) {
-        stackView.spacing = UIStackViewSpacingUseSystem;
+        [segmentView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
     } else {
-        stackView.spacing = 8;
+        [segmentView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
     }
-    
-    [label.widthAnchor constraintEqualToConstant:80].active = YES;
-    
-    return stackView;
+
+    segmentView.clickedHander = ^(MMSegmentItem *item) {
+        [self.render setEffect:item.type];
+        [self.render setIntensity:item.intensity];
+    };
+
+    segmentView.sliderValueChanged = ^(MMSegmentItem *item, CGFloat intensity) {
+        [self.render setIntensity:intensity];
+    };
+   
+    MMCameraTabSegmentView *segmentView2 = [[MMCameraTabSegmentView alloc] initWithFrame:CGRectZero];
+    segmentView2.items = [self itemsForBeauty];
+    segmentView2.backgroundColor = UIColor.clearColor;
+    segmentView2.translatesAutoresizingMaskIntoConstraints = NO;
+    self.beautyView = segmentView2;
+    [self.view addSubview:segmentView2];
+
+    [segmentView2.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+    [segmentView2.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+    [segmentView2.heightAnchor constraintEqualToConstant:160].active = YES;
+    if (@available(iOS 11.0, *)) {
+        [segmentView2.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
+    } else {
+        [segmentView2.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+    }
+
+    segmentView2.clickedHander = ^(MMSegmentItem *item) {
+        [self.render setBeautyFactor:item.intensity forKey:item.type];
+    };
+
+    segmentView2.sliderValueChanged = ^(MMSegmentItem *item, CGFloat intensity) {
+        [self.render setBeautyFactor:intensity forKey:item.type];
+    };
 }
 
-- (void)valueChanged:(UISlider *)slider {
-    switch (slider.tag) {
-        case 100:
-            // 红润
-            [self.render setBeautyFactor:slider.value forKey:kBeautyFilterKeyRubby];
-            break;
-            
-        case 101:
-            // 美白
-            [self.render setBeautyFactor:slider.value forKey:kBeautyFilterKeyWhitening];
-            break;
-            
-        case 102:
-            // 磨皮
-            [self.render setBeautyFactor:slider.value forKey:kBeautyFilterKeySmooth];
-            break;
-            
-        case 103:
-            // 大眼
-            [self.render setBeautyFactor:slider.value forKey:kBeautyFilterKeyBigEye];
-            break;
-            
-        case 104:
-            // 瘦脸
-            [self.render setBeautyFactor:slider.value forKey:kBeautyFilterKeyThinFace];
-            break;
-            
-        default:
-            break;
-    }
-    
+- (void)switchButonClicked:(UIButton *)button {
+    self.lookupView.hidden = !self.lookupView.hidden;
+    self.beautyView.hidden = !self.beautyView.hidden;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (NSArray<MMSegmentItem *> *)itemsForBeauty {
+    NSArray *names = @[
+        @"红润",
+        @"美白",
+        @"磨皮",
+        @"大眼",
+        @"瘦脸",
+        @"鼻宽",
+        @"脸宽",
+        @"削脸",
+        @"下巴",
+        @"额头",
+        @"短脸",
+        @"祛法令纹",
+        @"眼睛角度",
+        @"眼距",
+        @"眼袋",
+        @"眼高",
+        @"鼻子大小",
+        @"鼻高",
+        @"鼻梁",
+        @"鼻尖",
+        @"嘴唇厚度",
+        @"嘴唇大小",
+        @"宽颔",
+    ];
+    NSArray *types = @[
+        kBeautyFilterKeyRubby,
+        kBeautyFilterKeyWhitening,
+        kBeautyFilterKeySmooth,
+        kBeautyFilterKeyBigEye,
+        kBeautyFilterKeyThinFace,
+        kBeautyFilterKeyNoseWidth,
+        kBeautyFilterKeyFaceWidth,
+        kBeautyFilterKeyJawShape,
+        kBeautyFilterKeyChinLength,
+        kBeautyFilterKeyForehead,
+        kBeautyFilterKeyShortenFace,
+        kBeautyFilterKeyNasolabialFoldsArea,
+        kBeautyFilterKeyEyeTilt,
+        kBeautyFilterKeyEyeDistance,
+        kBeautyFilterKeyEyesArea,
+        kBeautyFilterKeyEyeHeight,
+        kBeautyFilterKeyNoseSize,
+        kBeautyFilterKeyNoseLift,
+        kBeautyFilterKeyNoseRidgeWidth,
+        kBeautyFilterKeyNoseTipSize,
+        kBeautyFilterKeyLipThickness,
+        kBeautyFilterKeyMouthSize,
+        kBeautyFilterKeyJawWidth,
+    ];
+    
+    NSArray *speciaTypes = @[
+        kBeautyFilterKeyNoseWidth,
+        kBeautyFilterKeyJawShape,
+        kBeautyFilterKeyChinLength,
+        kBeautyFilterKeyForehead,
+        kBeautyFilterKeyEyeTilt,
+        kBeautyFilterKeyEyeDistance,
+        kBeautyFilterKeyNoseSize,
+        kBeautyFilterKeyNoseLift,
+        kBeautyFilterKeyNoseRidgeWidth,
+        kBeautyFilterKeyNoseTipSize,
+        kBeautyFilterKeyLipThickness,
+        kBeautyFilterKeyMouthSize,
+        kBeautyFilterKeyJawWidth
+    ];
+    
+    NSMutableArray<MMSegmentItem *> *items = [NSMutableArray array];
+    for (int i = 0; i < types.count; i ++) {
+        MMSegmentItem *item = [[MMSegmentItem alloc] init];
+        item.name = names[i];
+        item.type = types[i];
+        item.intensity = 0.0;
+        if ([speciaTypes containsObject:item.type]) {
+            item.begin = -1.0;
+        } else {
+            item.begin = 0.0;
+        }
+        item.end = 1.0;
+        [items addObject:item];
+    }
+    return items.copy;
+}
+
+- (NSArray<MMSegmentItem *> *)itemsForLookup {
+    NSArray *names = @[@"自然", @"清新", @"红颜", @"日系F2", @"少年时代", @"白鹭", @"复古", @"斯托克", @"野餐", @"弗洛达", @"罗马", @"烧烤", @"烧烤F2", @"冰激凌", @"凉白开", @"叛逆", @"可口", @"拿铁", @"日系", @"旧时光", @"海苔", @"灰调", @"焦糖", @"白梨", @"粉调", @"红调", @"芝士", @"藜麦", @"酥脆", @"雾感", @"鲜奶油"];
+    NSArray *effects = @[
+        kMMBeautyLookupEffectNatural,
+        kMMBeautyLookupEffectFresh,
+        kMMBeautyLookupEffectSoulmate,
+        kMMBeautyLookupEffectSun,
+        kMMBeautyLookupEffectBoyhood,
+        kMMBeautyLookupEffectEgret,
+        kMMBeautyLookupEffectRetro,
+        kMMBeautyLookupEffectStoker,
+        kMMBeautyLookupEffectPicnic,
+        kMMBeautyLookupEffectFrida,
+        kMMBeautyLookupEffectRome,
+        kMMBeautyLookupEffectBroil,
+        kMMBeautyLookupEffectBroilF2,
+        kMMBeautyLookupEffectIceCream,
+        kMMBeautyLookupEffectCoolWhite,
+        kMMBeautyLookupEffectRebellious,
+        kMMBeautyLookupEffectTasty,
+        kMMBeautyLookupEffectLatte,
+        kMMBeautyLookupEffectSunShine,
+        kMMBeautyLookupEffectOld,
+        kMMBeautyLookupEffectSeaweed,
+        kMMBeautyLookupEffectGrayTone,
+        kMMBeautyLookupEffectCaramel,
+        kMMBeautyLookupEffectSnowPear,
+        kMMBeautyLookupEffectPinkTone,
+        kMMBeautyLookupEffectRedTone,
+        kMMBeautyLookupEffectCheese,
+        kMMBeautyLookupEffectQuinoa,
+        kMMBeautyLookupEffectCrispy,
+        kMMBeautyLookupEffectFoggy,
+        kMMBeautyLookupEffectFreshCream,
+    ];
+    
+    NSMutableArray<MMSegmentItem *> *items = [NSMutableArray array];
+    for (int i = 0; i < effects.count; i ++) {
+        MMSegmentItem *item = [[MMSegmentItem alloc] init];
+        item.name = names[i];
+        item.type = effects[i];
+        item.intensity = 1.0;
+        item.begin = 0.0;
+        item.end = 1.0;
+        [items addObject:item];
+    }
+    return items.copy;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

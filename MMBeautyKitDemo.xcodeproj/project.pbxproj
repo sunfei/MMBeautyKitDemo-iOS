@@ -21,6 +21,7 @@
 		765BFD2A23B309DB0017239F /* MMCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BFD2623B309DB0017239F /* MMCameraViewController.m */; };
 		765BFD2B23B309DB0017239F /* MMDeviceMotionObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BFD2723B309DB0017239F /* MMDeviceMotionObserver.m */; };
 		765BFD2C23B309DB0017239F /* MMVideoAssetsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BFD2823B309DB0017239F /* MMVideoAssetsCollectionViewController.m */; };
+		FAADCF0424C84118001D83BC /* MMCameraTabSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAADCF0324C84118001D83BC /* MMCameraTabSegmentView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,8 @@
 		765BFD2623B309DB0017239F /* MMCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCameraViewController.m; sourceTree = "<group>"; };
 		765BFD2723B309DB0017239F /* MMDeviceMotionObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDeviceMotionObserver.m; sourceTree = "<group>"; };
 		765BFD2823B309DB0017239F /* MMVideoAssetsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMVideoAssetsCollectionViewController.m; sourceTree = "<group>"; };
+		FAADCF0224C84118001D83BC /* MMCameraTabSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCameraTabSegmentView.h; sourceTree = "<group>"; };
+		FAADCF0324C84118001D83BC /* MMCameraTabSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCameraTabSegmentView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,8 @@
 		765BFD1423B309A80017239F /* BeautyKitUI */ = {
 			isa = PBXGroup;
 			children = (
+				FAADCF0224C84118001D83BC /* MMCameraTabSegmentView.h */,
+				FAADCF0324C84118001D83BC /* MMCameraTabSegmentView.m */,
 				765BFD2523B309DB0017239F /* MMAssetGridViewCell.h */,
 				765BFD2223B309DB0017239F /* MMAssetGridViewCell.m */,
 				765BFD2123B309DB0017239F /* MMCameraViewController.h */,
@@ -204,6 +209,7 @@
 				765BFCEA23B3095B0017239F /* AppDelegate.m in Sources */,
 				765BFCFB23B3095E0017239F /* main.m in Sources */,
 				765BFD2B23B309DB0017239F /* MMDeviceMotionObserver.m in Sources */,
+				FAADCF0424C84118001D83BC /* MMCameraTabSegmentView.m in Sources */,
 				765BFCED23B3095B0017239F /* SceneDelegate.m in Sources */,
 				765BFD1923B309B30017239F /* MMCamera.m in Sources */,
 				765BFD2023B309C40017239F /* MMPhotoEditViewController.m in Sources */,
@@ -361,7 +367,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sunfei.test4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sunfei.test2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
