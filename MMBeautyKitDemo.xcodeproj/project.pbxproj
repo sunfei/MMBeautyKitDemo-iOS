@@ -53,6 +53,11 @@
 		765BFD2823B309DB0017239F /* MMVideoAssetsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMVideoAssetsCollectionViewController.m; sourceTree = "<group>"; };
 		FAADCF0224C84118001D83BC /* MMCameraTabSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCameraTabSegmentView.h; sourceTree = "<group>"; };
 		FAADCF0324C84118001D83BC /* MMCameraTabSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCameraTabSegmentView.m; sourceTree = "<group>"; };
+		FAE6AB7724C9962F0097B577 /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
+		FAE6AB7824C9962F0097B577 /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
+		FAE6AB7924C9962F0097B577 /* package_upload.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = package_upload.py; sourceTree = "<group>"; };
+		FAE6AB7A24C9962F0097B577 /* sendMail.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = sendMail.py; sourceTree = "<group>"; };
+		FAE6AB7B24C9AF670097B577 /* MMBeautyKitDemo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = MMBeautyKitDemo.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +81,7 @@
 		765BFCDC23B3095B0017239F = {
 			isa = PBXGroup;
 			children = (
+				FAE6AB7524C9962F0097B577 /* Script */,
 				765BFCE723B3095B0017239F /* MMBeautyKitDemo */,
 				765BFCE623B3095B0017239F /* Products */,
 				2A389913EC9EBE83CA3602C4 /* Pods */,
@@ -130,6 +136,18 @@
 				765BFD1523B309B30017239F /* MMCamera.m */,
 			);
 			path = BeautyKitUI;
+			sourceTree = "<group>";
+		};
+		FAE6AB7524C9962F0097B577 /* Script */ = {
+			isa = PBXGroup;
+			children = (
+				FAE6AB7B24C9AF670097B577 /* MMBeautyKitDemo.plist */,
+				FAE6AB7724C9962F0097B577 /* ExportOptions.plist */,
+				FAE6AB7824C9962F0097B577 /* build.sh */,
+				FAE6AB7924C9962F0097B577 /* package_upload.py */,
+				FAE6AB7A24C9962F0097B577 /* sendMail.py */,
+			);
+			path = Script;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

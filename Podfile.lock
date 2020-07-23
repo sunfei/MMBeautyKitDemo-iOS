@@ -32,13 +32,14 @@ PODS:
   - ZipArchive (1.4.0)
 
 DEPENDENCIES:
-  - MMBeautyKit (from `../MMBeautyKit-iOS`)
-  - MMBeautyMedia (from `../MMBeautyMedia-iOS`)
+  - MMBeautyKit (= 1.1.0)
 
 SPEC REPOS:
   https://github.com/cosmos33/MMSpecs.git:
     - CosmosEncrypt
     - MCCSecret
+    - MMBeautyKit
+    - MMBeautyMedia
     - MMCV
     - MMDevice
     - MMFileService
@@ -50,19 +51,13 @@ SPEC REPOS:
     - MetalPetal
     - ZipArchive
 
-EXTERNAL SOURCES:
-  MMBeautyKit:
-    :path: "../MMBeautyKit-iOS"
-  MMBeautyMedia:
-    :path: "../MMBeautyMedia-iOS"
-
 SPEC CHECKSUMS:
   CosmosEncrypt: cf630ded96fc16c4968296dc438644e9173a248b
   Mantle: 35238ae6f2e2b2d474fa7b67fee82a59fea71915
   MCCSecret: 5658f66290969726586eddbdfe45e27731dbfa17
   MetalPetal: 4cf2f856bc08655c258a380580062953d99b570c
-  MMBeautyKit: 487cc34f7f26522dc8f4da97eafa7dd94d727ad8
-  MMBeautyMedia: 91a72d0707b6fd01e7dc9d8b6668be693a0c4845
+  MMBeautyKit: 593c4300ba203d1c3eafda97dca9e7dac1b7d809
+  MMBeautyMedia: 01c8e4a8ba703bb0808fa0ebfdaef16044a9906e
   MMCV: da08ed8aec7db3aca2853ff778e8d571f84fa9e4
   MMDevice: 8fdf446c7aedc2243918eabcf66f1c84f362931e
   MMFileService: 4112b6ddb95c3612731044e300bae12accff3b8e
@@ -71,6 +66,6 @@ SPEC CHECKSUMS:
   protobuf-lib: 72e5ad47507bf0457298db2ae4c34a935f2eab73
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: 922d2a15ab9cad105a0e2a0299431c0accbc5558
+PODFILE CHECKSUM: a9dbd360bb493a1c595bf3966d831929575f15aa
 
 COCOAPODS: 1.9.3
