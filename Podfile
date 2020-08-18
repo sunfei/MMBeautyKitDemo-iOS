@@ -10,8 +10,10 @@ target 'MMBeautyKitDemo' do
 
   #pod 'MMBeautyKit', :path => '../MMBeautyKit-iOS'
   #pod 'MMBeautyMedia', :path => '../MMBeautyMedia-iOS'
-  pod 'MMBeautyKit', '1.1.0'
-
+#  pod 'MMBeautyKit', '1.1.0'
+  pod 'MMBeautyKit', :git => 'https://github.com/sunfei/MMBeautyKit-iOS-1.git' 
+  pod 'MMBeautyMedia', :path => 'https://github.com/sunfei/MMBeautyMedia-iOS.git
+'
 end
 
 post_install do |installer|

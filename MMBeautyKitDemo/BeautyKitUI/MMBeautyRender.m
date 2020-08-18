@@ -14,6 +14,8 @@
 @property (nonatomic, strong) MMRenderModuleManager *render;
 @property (nonatomic, strong) MMRenderFilterBeautyModule *beautyDescriptor;
 @property (nonatomic, strong) MMRenderFilterLookupModule *lookupDescriptor;
+@property (nonatomic, strong) MMRenderFilterStickerModule *stickerDescriptor;
+@property (nonatomic, strong) MMRenderFilterBigHeadEffectModule *bigHeadDescriptor;
 
 @end
 
@@ -36,21 +38,21 @@
         render.devicePosition = AVCaptureDevicePositionFront;
         self.render = render;
         
-        MMRenderFilterBeautyModule *descriptor1 = [[MMRenderFilterBeautyModule alloc] init];
-        [render registerFilterModule:descriptor1];
+        _beautyDescriptor = [[MMRenderFilterBeautyModule alloc] init];
+        [render registerModule:_beautyDescriptor];
+
+        _lookupDescriptor = [[MMRenderFilterLookupModule alloc] init];
+        [render registerModule:_lookupDescriptor];
         
-        MMRenderFilterLookupModule *descriptor2 = [[MMRenderFilterLookupModule alloc] init];
-        [render registerFilterModule:descriptor2];
-        
-        self.beautyDescriptor = descriptor1;
-        self.lookupDescriptor = descriptor2;
+        _stickerDescriptor = [[MMRenderFilterStickerModule alloc] init];
+        [render registerModule:_stickerDescriptor];
     }
     return self;
 }
 
 - (CVPixelBufferRef _Nullable)renderPixelBuffer:(CVPixelBufferRef)pixelBuffer
                                           error:(NSError * __autoreleasing _Nullable *)error {
-    return [self.render renderPixelBuffer:pixelBuffer error:error];
+    return [self.render renderFrame:pixelBuffer error:error];
 }
 
 - (void)setInputType:(MMRenderInputType)inputType {
@@ -81,13 +83,21 @@
     [self.beautyDescriptor setBeautyFactor:value forKey:key];
 }
 
-- (void)setEffect:(MMBeautyLookupEffect)effect {
-    [self.lookupDescriptor setEffect:effect];
+- (void)setLookupPath:(NSString *)lookupPath {
+    [self.lookupDescriptor setLookupResourcePath:lookupPath];
     [self.lookupDescriptor setIntensity:1.0];
 }
 
-- (void)setIntensity:(CGFloat)intensity {
+- (void)setLookupIntensity:(CGFloat)intensity {
     [self.lookupDescriptor setIntensity:intensity];
+}
+
+- (void)setMaskModelPath:(NSString *)path {
+    [self.stickerDescriptor setMaskModelPath:path];
+}
+
+- (void)clearSticker {
+    [self.stickerDescriptor clear];
 }
 
 #pragma mark - delegate
