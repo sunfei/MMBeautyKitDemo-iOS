@@ -8,13 +8,10 @@ platform :ios, '10.0'
 
 target 'MMBeautyKitDemo' do
 
-  pod 'MMBeautyKit', :path => '../MMBeautyKit-iOS'
-  pod 'MMBeautyMedia', :path => '../MMBeautyMedia-iOS'
   pod 'MMXEngine', '4.4.4'
   pod 'MetalPetal', '1.10.5', :modular_headers => true
-#  pod 'MMBeautyKit', '1.1.0'
-  #pod 'MMBeautyKit', :git => 'https://github.com/sunfei/MMBeautyKit-iOS-1.git' 
-  #pod 'MMBeautyMedia', :path => 'https://github.com/sunfei/MMBeautyMedia-iOS.git'
+  pod 'MMBeautyKit', '1.2.0'
+  pod 'MMBeautyMedia', '1.2.0'
 end
 
 post_install do |installer|
