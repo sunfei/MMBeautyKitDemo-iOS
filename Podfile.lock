@@ -1,20 +1,14 @@
 PODS:
-  - BroadcastChannel (0.2.0)
   - CosmosEncrypt (1.0.0):
     - openssl-lib
     - protobuf-lib
-  - libjpeg (1.0.0)
-  - libpng (1.0.0)
-  - luajit (2.0.1)
-  - luasocket (3.0.0):
-    - luajit
   - Mantle (2.1.1):
     - Mantle/extobjc (= 2.1.1)
   - Mantle/extobjc (2.1.1)
   - MCCSecret (1.0.0)
-  - MetalPetal (1.13.0):
-    - MetalPetal/Core (= 1.13.0)
-  - MetalPetal/Core (1.13.0)
+  - MetalPetal (1.10.5):
+    - MetalPetal/Core (= 1.10.5)
+  - MetalPetal/Core (1.10.5)
   - MMBeautyKit (1.2.0):
     - CosmosEncrypt
     - MCCSecret
@@ -22,13 +16,11 @@ PODS:
     - MMCV
     - MMDevice
     - MMFileService
-    - XEngineLuaPatch
-    - XESceneKit
+    - MMXEngine
   - MMBeautyMedia (1.2.0):
     - Mantle
     - MetalPetal
-    - XEngineLuaPatch
-    - XESceneKit
+    - MMXEngine
   - MMCV (1.1.5):
     - MCCSecret
     - MMFileService
@@ -36,54 +28,26 @@ PODS:
     - ZipArchive
   - MMDevice (1.0.0)
   - MMFileService (1.3.1)
+  - MMXEngine (4.4.4)
   - openssl-lib (1.0.1)
-  - Opus (0.1.1):
-    - Opus/ogg (= 0.1.1)
-    - Opus/Opus (= 0.1.1)
-    - Opus/opusfile (= 0.1.1)
-  - Opus/ogg (0.1.1)
-  - Opus/Opus (0.1.1)
-  - Opus/opusfile (0.1.1)
   - PhotonHTTPDNS (1.0.1)
   - protobuf-lib (3.6.1)
-  - XEngineLuaPatch (4.4.4-20200804.2216)
-  - XESceneKit (4.4.4-20200804.2216):
-    - libjpeg
-    - libpng
-    - luajit
-    - Opus
   - ZipArchive (1.4.0)
 
 DEPENDENCIES:
-  - BroadcastChannel (= 0.2.0)
-  - libjpeg
-  - libpng
-  - luajit
-  - luasocket
+  - MetalPetal (= 1.10.5)
   - MMBeautyKit (from `../MMBeautyKit-iOS`)
   - MMBeautyMedia (from `../MMBeautyMedia-iOS`)
-  - Opus
-  - XEngineLuaPatch (= 4.4.4-20200804.2216)
-  - XESceneKit (= 4.4.4-20200804.2216)
+  - MMXEngine (= 4.4.4)
 
 SPEC REPOS:
-  https://git.wemomo.com/base/Specs.git:
-    - BroadcastChannel
-    - libjpeg
-    - libpng
-    - luajit
-    - luasocket
-  https://git.wemomo.com/ios/Specs.git:
-    - Opus
-  https://git.wemomo.com/next/Specs.git:
-    - XEngineLuaPatch
-    - XESceneKit
   https://github.com/cosmos33/MMSpecs.git:
     - CosmosEncrypt
     - MCCSecret
     - MMCV
     - MMDevice
     - MMFileService
+    - MMXEngine
     - openssl-lib
     - PhotonHTTPDNS
     - protobuf-lib
@@ -99,28 +63,21 @@ EXTERNAL SOURCES:
     :path: "../MMBeautyMedia-iOS"
 
 SPEC CHECKSUMS:
-  BroadcastChannel: f8356b5d9ec93a0c161b8c7c3ef4789fea211225
   CosmosEncrypt: cf630ded96fc16c4968296dc438644e9173a248b
-  libjpeg: 18df6129c658b0bf5947f482430639a2baf0fcc1
-  libpng: 9bb3c8630efd0775e578d161bf677eaae140feda
-  luajit: 241159610942aa3358dbd0b2c90cd785ccc9f228
-  luasocket: fb8305971c464c4eabe2844c495efdb726998636
   Mantle: 35238ae6f2e2b2d474fa7b67fee82a59fea71915
   MCCSecret: 5658f66290969726586eddbdfe45e27731dbfa17
-  MetalPetal: 985e14c41cea0086264799fae4de02602c51d794
-  MMBeautyKit: 9bc54967a58475b057b29d7ade723ce7f2aaf791
-  MMBeautyMedia: 2d102a8adab520d44079bf688d057c816cd07104
+  MetalPetal: e709c2cd4116c0eb09f9b9f1822353ebe769b824
+  MMBeautyKit: eb195d45a89699c86dfe9975e33896d4db784015
+  MMBeautyMedia: 7873eb9a62442981f924cc052789036340905ebd
   MMCV: 45c9f6a33419f8c3661615832f14dfb4f0ff6043
   MMDevice: 8fdf446c7aedc2243918eabcf66f1c84f362931e
   MMFileService: 4112b6ddb95c3612731044e300bae12accff3b8e
+  MMXEngine: 59be02b571db760313f49662cbaeacfbab2072a5
   openssl-lib: e3f61a10280caf261c0e4c6b3e720aa94825f07a
-  Opus: 7fd799938004c86e0c0c5a4555b34f3577e305e5
   PhotonHTTPDNS: f2d67b2f6008451c5dce51e15171e2be50f58554
   protobuf-lib: 72e5ad47507bf0457298db2ae4c34a935f2eab73
-  XEngineLuaPatch: 686efbac5bf8794cacd55b57c242475b2e208991
-  XESceneKit: e1befe9484771ccc2838af7cb735ac699a94a946
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: f709ebf5ac87ddea28c26bd5a8dcf8810d8ab50e
+PODFILE CHECKSUM: c02cb5bdcdcb799f23b1b90df0513ca58ebdbfe8
 
 COCOAPODS: 1.9.3

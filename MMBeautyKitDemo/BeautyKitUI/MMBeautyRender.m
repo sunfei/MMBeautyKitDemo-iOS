@@ -28,7 +28,7 @@
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
 #if DEBUG
-            [CosmosBeautySDK initSDKWithAppId:@"280f8ef2cec41cde3bed705236ab9bc4" delegate:self];
+            [CosmosBeautySDK initSDKWithAppId:@"02f12cc7047df70ba57b3efc43b3ed91" delegate:self];
 #else
             [CosmosBeautySDK initSDKWithAppId:@"6b38bc8e6afdbd040b8f6386b65c0aac" delegate:self];
 #endif
